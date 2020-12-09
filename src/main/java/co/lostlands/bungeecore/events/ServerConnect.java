@@ -25,8 +25,20 @@ public class ServerConnect implements Listener {
         if(!e.getReason().equals(ServerConnectEvent.Reason.JOIN_PROXY)) return;
         ProxiedPlayer p = e.getPlayer();
         String hostname = p.getPendingConnection().getVirtualHost().getHostString();
+        String uuid = p.getPendingConnection().getUniqueId().toString();
         hostname = hostname.replace('.', '_');
-        if (plugin.getConfig().getString("routes." + hostname).length() > 0) {
+        System.out.println(uuid);
+        if (plugin.getConfig().getString("forced-players." + uuid).length() > 0) {
+            String serverName = plugin.getConfig().getString("forced-players." + uuid);
+            ServerInfo target = ProxyServer.getInstance().getServerInfo(serverName);
+            if (target != null) {
+                plugin.getLogger().info("Forced player "+p.getPendingConnection().getName()+" to " + serverName);
+                e.setTarget(target);
+            } else {
+                p.disconnect(new TextComponent(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + " " + plugin.getConfig().getString("messages.route-not-found"))));
+                plugin.getLogger().log(Level.WARNING, ChatColor.RED + "Failed to route player "+p.getName()+" to "+serverName+": Server does not exist.");
+            }
+        } else if (plugin.getConfig().getString("routes." + hostname).length() > 0) {
             String serverName = plugin.getConfig().getString("routes." + hostname);
             ServerInfo target = ProxyServer.getInstance().getServerInfo(serverName);
             if (target != null) {

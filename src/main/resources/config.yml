@@ -9,6 +9,11 @@ routes:
   lobby_md-5_net: "lobby"
   pvp_md-5_net: "pvp"
 
+# Forced players will always force a user to a specific server on join. This will bypass Bungeecore routes and Bungeecord forced hosts.
+# UUIDs must be in dashed form.
+forced-players:
+  069a79f4-44e9-4726-a5be-fca90e38aaf5: "lobby"
+
 # Servers
 # Used for dynamically adding/removing servers from your Bungeecord network
 # Simply add or remove and use /bc reload to update your network's servers.
