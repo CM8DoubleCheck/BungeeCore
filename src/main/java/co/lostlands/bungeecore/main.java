@@ -28,7 +28,6 @@ import co.lostlands.bungeecore.events.ProxyPing;
 public final class main extends Plugin implements Listener {
     Configuration config;
     JsonObject bans;
-    List<String> bungeeServers;
     @Override
     public void onEnable() {
         if (!getDataFolder().exists()) getDataFolder().mkdir();
@@ -70,8 +69,6 @@ public final class main extends Plugin implements Listener {
 
         //Register servers
         getLogger().info("Loading servers...");
-        //Set default bungeecord servers on start up
-        bungeeServers = new ArrayList<>(ProxyServer.getInstance().getServers().keySet());
 
         List<String> servers = config.getStringList("servers.enabled");
         if (servers.size() > 0) {
@@ -117,9 +114,6 @@ public final class main extends Plugin implements Listener {
     }
     public Configuration getConfig() {
         return config;
-    }
-    public List<String> getBungeeServers() {
-        return bungeeServers;
     }
     public JsonObject getBans() {
         return bans;
