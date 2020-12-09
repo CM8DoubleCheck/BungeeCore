@@ -1,0 +1,40 @@
+#Lobby server
+prefix: "&8[&aBungeeCore&8]"
+lobby: "lobby"
+alert-format: "&8[&cServer Name&8] &f{message}"
+
+# Routes is an alternative to bungeecord forced hosts. You can update routes and use /bc reload to easily reload and route players to specific servers based on hostname.
+routes:
+  lobby.md-5.net: "lobby"
+  pvp.md-5.net: "pvp"
+
+# motds used for setting different MOTD sets for different hostnames
+# Useful if you are routing multiple servers using forced hosts through one BungeeCord instance
+# You must use an underscore (_) in place of a period (.) when typing a domain or IP.
+# Placeholders:
+# {online} = total number of players online
+motds:
+  enabled: true
+  pvp_md-5_net:
+    online:
+      enabled: true
+      type: "add" # values: override, add
+      included_servers: # Servers to include when calculating player count. Type must be "add"
+        - "lobby"
+        - "pvp"
+      value: 128
+    slots:
+      enabled: true
+      value: 999
+    protocol:
+      enabled: true
+      value: "BungeeCore"
+    icon:
+      enabled: false
+      file: md5pvp.png # Icon files should be placed in the /plugins/BungeeCore/icons folder
+    motd:
+      enabled: true
+      values:
+      - "&aPowered by BungeeCore\n&eThis is a new line"
+      - "&7A Minecraft Server"
+      - "&b{online} players online"

@@ -1,0 +1,4 @@
+name: BungeeCore
+author: DoubleCheck
+version: ${project.version}
+main: co.lostlands.bungeecore.main
