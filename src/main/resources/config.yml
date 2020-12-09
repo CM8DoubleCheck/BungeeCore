@@ -8,8 +8,6 @@ alert-format: "&8[&cServer Name&8] &f{message}"
 routes:
   lobby_md-5_net: "lobby"
   pvp_md-5_net: "pvp"
-route-not-found: "&cServer not found."
-
 
 # Servers
 # Used for dynamically adding/removing servers from your Bungeecord network
@@ -27,6 +25,11 @@ servers:
       motd: '&1Just another Waterfall - Forced Host'
       address: "127.0.0.1:54321"
       restricted: false
+
+# Plugin Messages
+messages:
+  route-not-found: "&cServer not found."
+  server-removed: "&cDisconnected due to server being removed from the network."
 
 # motds used for setting different MOTD sets for different hostnames
 # Useful if you are routing multiple servers using forced hosts through one BungeeCord instance
