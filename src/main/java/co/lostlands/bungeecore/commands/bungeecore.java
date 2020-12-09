@@ -44,6 +44,11 @@ public class bungeecore extends Command {
                 }
                 */
                 break;
+            case "reloadservers":
+
+                System.out.println(plugin.getBungeeServers());
+
+                break;
             default:
                 sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + "&c Unknown command")));
                 break;

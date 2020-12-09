@@ -3,12 +3,30 @@ prefix: "&8[&aBungeeCore&8]"
 lobby: "lobby"
 alert-format: "&8[&cServer Name&8] &f{message}"
 
-# Routes is an alternative to bungeecord forced hosts. You can update routes and use /bc reload to easily reload and route players to specific servers based on hostname.
+# Routes is an alternative to Bungeecord forced hosts. You can update routes and use /bc reload to easily reload and route players to specific servers based on hostname.
 # You must use an underscore (_) in place of a period (.) when typing a domain or IP.
 routes:
   lobby_md-5_net: "lobby"
   pvp_md-5_net: "pvp"
 route-not-found: "&cServer not found."
+
+
+# Servers
+# Used for dynamically adding/removing servers from your Bungeecord network
+# Simple add, or remove, and use /bc reload then /bc register to update your network's servers.
+servers:
+  enabled:
+    - "example"
+    - "example2"
+  available:
+    example:
+      motd: '&1Just another Waterfall - Forced Host'
+      address: "127.0.0.1:12345"
+      restricted: false
+    example2:
+      motd: '&1Just another Waterfall - Forced Host'
+      address: "127.0.0.1:54321"
+      restricted: false
 
 # motds used for setting different MOTD sets for different hostnames
 # Useful if you are routing multiple servers using forced hosts through one BungeeCord instance

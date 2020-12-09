@@ -4,15 +4,18 @@ import co.lostlands.bungeecore.events.ServerConnect;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
-import net.md_5.bungee.config.JsonConfiguration;
 import net.md_5.bungee.config.YamlConfiguration;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 
 //Commands
 import co.lostlands.bungeecore.commands.alert;
@@ -25,6 +28,7 @@ import co.lostlands.bungeecore.events.ProxyPing;
 public final class main extends Plugin implements Listener {
     Configuration config;
     JsonObject bans;
+    String bungeeServers;
     @Override
     public void onEnable() {
         if (!getDataFolder().exists()) getDataFolder().mkdir();
@@ -64,6 +68,33 @@ public final class main extends Plugin implements Listener {
         }
         */
 
+        //Register servers
+        getLogger().info("Loading servers...");
+
+        System.out.println(ProxyServer.getInstance().getServers());
+
+        List<String> bungeeServers = new ArrayList<>(ProxyServer.getInstance().getServers().keySet());
+        System.out.println(bungeeServers);
+
+        List<String> servers = config.getStringList("servers.enabled");
+        if (servers.size() > 0) {
+            for (int i = 0; i < servers.size(); i++) {
+                String serverName = servers.get(i);
+                String serverMOTD = config.getString("servers.available."+serverName+".motd");
+                String addr = config.getString("servers.available."+serverName+".address");
+                boolean restricted = config.getBoolean("servers.available."+serverName+".restricted");
+                getLogger().info("Registering server "+serverName+" ["+addr+"]");
+
+                InetSocketAddress socketAddress = new InetSocketAddress(
+                        addr.substring(0, addr.lastIndexOf(":")),
+                        Integer.parseInt(addr.substring(addr.lastIndexOf(":")+1)));
+
+                ServerInfo newServer = ProxyServer.getInstance().constructServerInfo(serverName, socketAddress, serverMOTD, restricted);
+                System.out.println(newServer);
+                ProxyServer.getInstance().getServers().put(serverName, newServer);
+                getLogger().info("Registered server "+serverName);
+            }
+        }
 
         //Commands
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new bungeecore(this));
@@ -90,5 +121,10 @@ public final class main extends Plugin implements Listener {
     public Configuration getConfig() {
         return config;
     }
-    public JsonObject getBans() {return bans;}
+    public String getBungeeServers() {
+        return bungeeServers;
+    }
+    public JsonObject getBans() {
+        return bans;
+    }
 }
