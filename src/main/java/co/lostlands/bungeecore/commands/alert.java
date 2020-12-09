@@ -18,15 +18,13 @@ public class alert extends Command {
     }
     @Override
     public void execute(CommandSender sender, String[] args) {
-        for (ProxiedPlayer proxy : ProxyServer.getInstance().getPlayers()) {
-            StringBuilder str = new StringBuilder();
-            for (int i = 0; i < args.length; i++) {
-                str.append(args[i] + " ");
-            }
-            String s = str.toString();
-            String finalString = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("alert-format").replace("{message}", s));
-            System.out.println(finalString);
-            proxy.sendMessage(new TextComponent(finalString));
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < args.length; i++) {
+            str.append(args[i] + " ");
         }
+        String s = str.toString();
+        String finalString = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("alert-format").replace("{message}", s));
+        System.out.println(finalString);
+        ProxyServer.getInstance().broadcast(new TextComponent(finalString));
     }
 }
