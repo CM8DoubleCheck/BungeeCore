@@ -88,7 +88,7 @@ public class ProxyPing implements Listener {
             List<String> motds = plugin.getConfig().getStringList("motds." + hostname + ".motd.values");
             if (motds.size() > 0) {
                 int index = (int) (Math.random() * (motds.size()) + 0);
-                String motdString = motds.get(index).replace("{online}", ""+online+"");
+                String motdString = motds.get(index).replace("{online}", ""+online);
                 motd = new TextComponent(ChatColor.translateAlternateColorCodes('&', motdString));
             } else {
                 motd = event.getResponse().getDescriptionComponent();
