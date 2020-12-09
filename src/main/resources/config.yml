@@ -11,7 +11,7 @@ routes:
 
 # Servers
 # Used for dynamically adding/removing servers from your Bungeecord network
-# Simply add, or remove, and use /bc reload then /bc register to update your network's servers.
+# Simply add or remove and use /bc reload to update your network's servers.
 servers:
   enabled:
     - "example"
