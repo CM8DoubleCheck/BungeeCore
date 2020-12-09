@@ -32,7 +32,7 @@ public class ServerConnect implements Listener {
             if (target != null) {
                 e.setTarget(target);
             } else {
-                p.disconnect(new TextComponent(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + " " + plugin.getConfig().getString("route-not-found"))));
+                p.disconnect(new TextComponent(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + " " + plugin.getConfig().getString("messages.route-not-found"))));
                 plugin.getLogger().log(Level.WARNING, ChatColor.RED + "Failed to route player "+p.getName()+" to "+serverName+" using hostname "+hostname+": Server does not exist.");
             }
         }
