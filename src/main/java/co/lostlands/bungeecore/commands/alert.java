@@ -24,7 +24,6 @@ public class alert extends Command {
         }
         String s = str.toString();
         String finalString = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("alert-format").replace("{message}", s));
-        System.out.println(finalString);
         ProxyServer.getInstance().broadcast(new TextComponent(finalString));
     }
 }
