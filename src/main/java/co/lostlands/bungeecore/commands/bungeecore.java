@@ -23,6 +23,7 @@ public class bungeecore extends Command {
     public void execute(CommandSender sender, String[] args) {
         if (args.length == 0) {
             sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + "&a BungeeCore version 1.0 by DoubleCheck")));
+            return;
         }
         switch (args[0]) {
             case "reload":
