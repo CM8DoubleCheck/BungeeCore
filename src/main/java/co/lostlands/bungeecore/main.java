@@ -84,7 +84,6 @@ public final class main extends Plugin implements Listener {
                         Integer.parseInt(addr.substring(addr.lastIndexOf(":")+1)));
 
                 ServerInfo newServer = ProxyServer.getInstance().constructServerInfo(serverName, socketAddress, serverMOTD, restricted);
-                System.out.println(newServer);
                 ProxyServer.getInstance().getServers().put(serverName, newServer);
                 getLogger().info("Registered server "+serverName);
             }
