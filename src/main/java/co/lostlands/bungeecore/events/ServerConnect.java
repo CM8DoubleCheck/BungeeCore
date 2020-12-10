@@ -26,7 +26,6 @@ public class ServerConnect implements Listener {
         String hostname = p.getPendingConnection().getVirtualHost().getHostString();
         String uuid = p.getPendingConnection().getUniqueId().toString();
         hostname = hostname.replace('.', '_');
-        System.out.println(uuid);
         if (plugin.getConfig().getString("forced-players." + uuid).length() > 0) {
             String serverName = plugin.getConfig().getString("forced-players." + uuid);
             ServerInfo target = ProxyServer.getInstance().getServerInfo(serverName);
