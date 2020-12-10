@@ -15,7 +15,10 @@ import net.md_5.bungee.event.EventHandler;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ProxyPing implements Listener {
     private final main plugin;
@@ -88,7 +91,22 @@ public class ProxyPing implements Listener {
             List<String> motds = plugin.getConfig().getStringList("motds." + hostname + ".motd.values");
             if (motds.size() > 0) {
                 int index = (int) (Math.random() * (motds.size()) + 0);
-                String motdString = motds.get(index).replace("{online}", ""+online);
+                String motdString = motds.get(index);
+                List<String> placeholderMatches = resolvePlaceholders(motdString);
+                for (int i = 0; i < placeholderMatches.size(); i++) {
+                    String placeholder = placeholderMatches.get(i);
+                    if (placeholder.equals("online")) {
+                        motdString = motdString.replace("{online}", ""+online);
+                    } else if (placeholder.startsWith("online_")) {
+                        String serverName = placeholder.substring(7, placeholder.length() + 0);
+                        ServerInfo server = ProxyServer.getInstance().getServerInfo(serverName);
+                        if (server != null) {
+                            int serverCount = server.getPlayers().size();
+                            motdString = motdString.replace("{" + placeholder + "}", "" + serverCount);
+                        }
+                    }
+                }
+
                 motd = new TextComponent(ChatColor.translateAlternateColorCodes('&', motdString));
             } else {
                 motd = event.getResponse().getDescriptionComponent();
@@ -108,4 +126,16 @@ public class ProxyPing implements Listener {
         response = new ServerPing(protocol, players, motd, icon);
         event.setResponse(response);
     }
+
+    public static List<String> resolvePlaceholders(String s) {
+        // returns all matches of p in s for first group in regular expression
+        List<String> matches = new ArrayList<String>();
+        Matcher m = Pattern.compile("\\{([^}]+)}").matcher(s);
+        while(m.find()) {
+            matches.add(m.group(1));
+        }
+        return matches;
+    }
+
+
 }
