@@ -1,4 +1,5 @@
-#Lobby server
+# Bungeecore by DoubleCheck
+
 prefix: "&8[&aBungeeCore&8]"
 lobby: "lobby"
 alert-format: "&8[&cServer Name&8] &f{message}"
