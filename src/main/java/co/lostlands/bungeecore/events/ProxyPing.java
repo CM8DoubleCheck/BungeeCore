@@ -40,6 +40,7 @@ public class ProxyPing implements Listener {
         ServerPing.Protocol protocol;
         BaseComponent motd;
         Favicon icon;
+        ServerPing.Players playerList;
 
         //Players
         if (plugin.getConfig().getBoolean("motds." + hostname + ".slots.enabled")) {
@@ -75,7 +76,34 @@ public class ProxyPing implements Listener {
         } else {
             online = event.getResponse().getPlayers().getOnline();
         }
-        ServerPing.Players players = new ServerPing.Players(slots, online, new ServerPing.PlayerInfo[0]);
+        if (plugin.getConfig().getBoolean("motds." + hostname + ".hover.enabled")) {
+            List<ServerPing.PlayerInfo> hover = new ArrayList<>();
+            List<String> values = plugin.getConfig().getStringList("motds." + hostname + ".hover.values");
+            if (values.size() > 0) {
+                for (int i = 0; i < values.size(); i++) {
+                    String playerValue = values.get(i);
+                    List<String> placeholderMatches = resolvePlaceholders(playerValue);
+                    for (int index = 0; index < placeholderMatches.size(); index++) {
+                        String placeholder = placeholderMatches.get(index);
+                        if (placeholder.equals("online")) {
+                            playerValue = playerValue.replace("{online}", ""+online);
+                        } else if (placeholder.startsWith("online_")) {
+                            String serverName = placeholder.substring(7, placeholder.length() + 0);
+                            ServerInfo server = ProxyServer.getInstance().getServerInfo(serverName);
+                            if (server != null) {
+                                int serverCount = server.getPlayers().size();
+                                playerValue = playerValue.replace("{" + placeholder + "}", "" + serverCount);
+                            }
+                        }
+                    }
+                    hover.add(new ServerPing.PlayerInfo(ChatColor.translateAlternateColorCodes('&', playerValue), String.valueOf(i)));
+                }
+            }
+            playerList = new ServerPing.Players(slots, online, hover.toArray(new ServerPing.PlayerInfo[0]));
+        } else {
+            playerList = new ServerPing.Players(slots, online, event.getResponse().getPlayers().getSample());
+        }
+
 
         //Protocol
         if (plugin.getConfig().getBoolean("motds." + hostname + ".protocol.enabled")) {
@@ -123,7 +151,7 @@ public class ProxyPing implements Listener {
         } else {
             icon = event.getResponse().getFaviconObject();
         }
-        response = new ServerPing(protocol, players, motd, icon);
+        response = new ServerPing(protocol, playerList, motd, icon);
         event.setResponse(response);
     }
 
