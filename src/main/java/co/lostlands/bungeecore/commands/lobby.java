@@ -16,7 +16,7 @@ public class lobby extends Command {
     private main plugin;
 
     public lobby(main pl) {
-        super("lobby", "", "hub");
+        super(pl.getConfig().getString("lobby.command"), "", pl.getConfig().getString("lobby.alias"));
         plugin = pl;
     }
 
@@ -24,11 +24,11 @@ public class lobby extends Command {
     public void execute(CommandSender sender, String[] args) {
         if ((sender instanceof ProxiedPlayer)) { //check if sender is player
             ProxiedPlayer p = (ProxiedPlayer)sender;
-            if (p.getServer().toString().equals(plugin.getConfig().getString("lobby"))) {
+            if (p.getServer().toString().equals(plugin.getConfig().getString("lobby.server"))) {
                 //Already connected to the lobby server
                 p.sendMessage(new ComponentBuilder("You are already in the lobby").color(ChatColor.RED).create());
             } else {
-                ServerInfo target = ProxyServer.getInstance().getServerInfo(plugin.getConfig().getString("lobby"));
+                ServerInfo target = ProxyServer.getInstance().getServerInfo(plugin.getConfig().getString("lobby.server"));
                 if (target != null) {
                     p.sendMessage(new ComponentBuilder("Sending you to the lobby!").color(ChatColor.GREEN).create());
                     p.connect(target);

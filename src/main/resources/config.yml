@@ -1,8 +1,12 @@
 # Bungeecore by DoubleCheck
 
 prefix: "&8[&aBungeeCore&8]"
-lobby: "lobby"
 alert-format: "&8[&cServer Name&8] &f{message}"
+
+lobby:
+  server: "lobby"
+  command: "lobby" # /lobby
+  alias: "hub" # /hub
 
 # Routes is an alternative to Bungeecord forced hosts. You can update routes and use /bc reload to reload and route players to specific servers based on hostname.
 # You must use an underscore (_) in place of a period (.) when typing a domain or IP.
