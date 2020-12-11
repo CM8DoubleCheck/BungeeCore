@@ -13,7 +13,10 @@ routes:
 # Forced players will always force a user to a specific server on join. This will bypass Bungeecore routes and Bungeecord forced hosts.
 # UUIDs must be in dashed form.
 forced-players:
-  069a79f4-44e9-4726-a5be-fca90e38aaf5: "lobby"
+  069a79f4-44e9-4726-a5be-fca90e38aaf5: "pvp"
+
+# Priority will force all other players not set in routes or forced-players to a specific server.
+priority: "lobby"
 
 # Servers
 # Used for dynamically adding/removing servers from your Bungeecord network

@@ -47,6 +47,15 @@ public class ServerConnect implements Listener {
                 p.disconnect(new TextComponent(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + " " + plugin.getConfig().getString("messages.route-not-found"))));
                 plugin.getLogger().log(Level.WARNING, ChatColor.RED + "Failed to route player "+p.getName()+" to "+serverName+" using hostname "+hostname+": Server does not exist.");
             }
+        } else if (plugin.getConfig().getString("priority").length() > 0) {
+            String serverName = plugin.getConfig().getString("priority");
+            ServerInfo target = ProxyServer.getInstance().getServerInfo(serverName);
+            if (target != null) {
+                e.setTarget(target);
+            } else {
+                p.disconnect(new TextComponent(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + " " + plugin.getConfig().getString("messages.route-not-found"))));
+                plugin.getLogger().log(Level.WARNING, ChatColor.RED + "Failed to route player "+p.getName()+" to "+serverName+": Server does not exist.");
+            }
         }
     }
 }
