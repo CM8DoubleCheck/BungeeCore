@@ -14,7 +14,6 @@ import net.md_5.bungee.config.YamlConfiguration;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.List;
 
 //Commands

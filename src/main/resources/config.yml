@@ -1,8 +1,12 @@
 # Bungeecore by DoubleCheck
 
 prefix: "&8[&aBungeeCore&8]"
-lobby: "lobby"
 alert-format: "&8[&cServer Name&8] &f{message}"
+
+lobby:
+  server: "lobby"
+  command: "lobby" # /lobby
+  alias: "hub" # /hub
 
 # Routes is an alternative to Bungeecord forced hosts. You can update routes and use /bc reload to reload and route players to specific servers based on hostname.
 # You must use an underscore (_) in place of a period (.) when typing a domain or IP.
@@ -45,6 +49,7 @@ messages:
 # You must use an underscore (_) in place of a period (.) when typing a domain or IP.
 # Placeholders:
 # {online} = total number of players online
+# {online_SERVER} = total number of players on the specified server
 motds:
   enabled: true
   pvp_md-5_net:
@@ -64,9 +69,15 @@ motds:
     icon:
       enabled: false
       file: md5pvp.png # Icon files should be placed in the /plugins/BungeeCore/icons folder
+    hover:
+      enabled: true
+      values:
+        - "&a&lOnline Players"
+        - "&e&lExample:&r&e {online_example}"
     motd:
       enabled: true
       values:
       - "&aPowered by BungeeCore\n&eThis is a new line"
       - "&7A Minecraft Server"
       - "&b{online} players online"
+      - "&e{online_example} players on server example"

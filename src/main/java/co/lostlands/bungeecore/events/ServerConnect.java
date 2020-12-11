@@ -3,7 +3,6 @@ package co.lostlands.bungeecore.events;
 import co.lostlands.bungeecore.main;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -27,7 +26,6 @@ public class ServerConnect implements Listener {
         String hostname = p.getPendingConnection().getVirtualHost().getHostString();
         String uuid = p.getPendingConnection().getUniqueId().toString();
         hostname = hostname.replace('.', '_');
-        System.out.println(uuid);
         if (plugin.getConfig().getString("forced-players." + uuid).length() > 0) {
             String serverName = plugin.getConfig().getString("forced-players." + uuid);
             ServerInfo target = ProxyServer.getInstance().getServerInfo(serverName);
