@@ -43,48 +43,31 @@ public final class main extends Plugin implements Listener {
                 e.printStackTrace();
             }
         }
-        File bansFile = new File(getDataFolder(), "banned-players.json");
-        if (!bansFile.exists()) {
-            try (InputStream in = getResourceAsStream("banned-players.json")) {
-                getLogger().info("Created banned-players file");
-                Files.copy(in, bansFile.toPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
         try {
             loadConfig();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        /*
-        try {
-            loadBans();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
 
         //Register servers
         getLogger().info("Loading servers...");
 
         List<String> servers = config.getStringList("servers.enabled");
         if (servers.size() > 0) {
-            for (int i = 0; i < servers.size(); i++) {
-                String serverName = servers.get(i);
-                String serverMOTD = config.getString("servers.available."+serverName+".motd");
-                String addr = config.getString("servers.available."+serverName+".address");
-                boolean restricted = config.getBoolean("servers.available."+serverName+".restricted");
-                getLogger().info("Registering server "+serverName+" ["+addr+"]");
+            for (String serverName : servers) {
+                String serverMOTD = config.getString("servers.available." + serverName + ".motd");
+                String addr = config.getString("servers.available." + serverName + ".address");
+                boolean restricted = config.getBoolean("servers.available." + serverName + ".restricted");
+                getLogger().info("Registering server " + serverName + " [" + addr + "]");
 
                 InetSocketAddress socketAddress = new InetSocketAddress(
                         addr.substring(0, addr.lastIndexOf(":")),
-                        Integer.parseInt(addr.substring(addr.lastIndexOf(":")+1)));
+                        Integer.parseInt(addr.substring(addr.lastIndexOf(":") + 1)));
 
                 ServerInfo newServer = ProxyServer.getInstance().constructServerInfo(serverName, socketAddress, serverMOTD, restricted);
                 ProxyServer.getInstance().getServers().put(serverName, newServer);
-                getLogger().info("Registered server "+serverName);
+                getLogger().info("Registered server " + serverName);
             }
         }
 
