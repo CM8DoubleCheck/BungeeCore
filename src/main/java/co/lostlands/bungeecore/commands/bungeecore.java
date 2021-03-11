@@ -85,17 +85,6 @@ public class bungeecore extends Command {
                     sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + "&c Failed to reload config.")));
                     e.printStackTrace();
                 }
-
-
-                /*
-                try {
-                    plugin.loadBans();
-                    sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + "&a Reloaded banned players.")));
-                } catch (IOException e) {
-                    sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + "&c Failed to reload banned players.")));
-                    e.printStackTrace();
-                }
-                */
                 break;
             default:
                 sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + "&c Unknown command")));
